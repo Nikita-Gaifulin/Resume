@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { MapPin, Mail, GithubCircle, Telegram } from '@iconoir/vue'
+import { MapPin, Mail, GithubCircle, Telegram , SunLight, HalfMoon} from '@iconoir/vue'
 
 const photoUrl = './logo.png'
 
@@ -72,7 +72,8 @@ function toggleTheme() {
     <div class="container">
       <!-- Кнопка переключения темы -->
       <button class="theme-toggle" @click="toggleTheme">
-        {{ isDark ? '☀️' : '🌙' }}
+        <SunLight v-if="!isDark" color="#000" :size="18"/>
+        <HalfMoon v-else color="#FFF" :size="18"/>
       </button>
 
       <!-- Основная сетка -->
@@ -196,6 +197,10 @@ body {
   position: relative;
 }
 
+.theme-icon {
+  color: #FFF;
+}
+
 /* Кнопка темы */
 .theme-toggle {
   position: fixed;
@@ -273,6 +278,11 @@ body {
 
 .contacts p {
   word-break: break-word;
+}
+
+.contact-icon {
+  vertical-align: middle;
+  padding-right: 0.1rem;
 }
 
 .skills h3 {
