@@ -11,51 +11,44 @@ const personal = ref({
   email: 'nik141196@gmail.com',
   github: 'github.com/Nikita-Gaifulin',
   telegram: '@N8K8TA',
-  about: 'Создаю чистые, адаптивные и производительные интерфейсы. Люблю Vue, Tailwind и минималистичный дизайн.'
+  about: 'Привет! Я Frontend разработчик с 6+ годами опыта в нефтегазовой отрасли в компании международного уровня (Emerson). Решаю инженерные задачи повышенной сложности 👷🏻‍🛠️. Нравится создавать не только качественный, но и эстетически красивый продукт✨. Имею опыт взаимодействия с международными командами (English — Intermediate)🇬🇧. Вне работы люблю теннис, тренажерный зал, читать классику и много гулять.'
 })
 
 const skills = ref([
   { name: 'Vue 3', level: 'продвинутый' },
-  { name: 'Nuxt 3', level: 'средний' },
   { name: 'TypeScript', level: 'продвинутый' },
   { name: 'Tailwind CSS', level: 'продвинутый' },
-  { name: 'SCSS', level: 'продвинутый' },
+  { name: 'HTML', level: 'продвинутый' },
+  { name: 'Docker', level: 'продвинутый' },
+  { name: 'Cypress', level: 'продвинутый' },
+  { name: 'Jest', level: 'продвинутый' },
   { name: 'Git / GitHub', level: 'продвинутый' }
 ])
 
 const experience = ref([
   {
-    company: 'Веб-студия "Медиум"',
-    period: '2022 — настоящее время',
+    company: 'Emerson',
+    period: '2020 — 2022',
+    role: 'Frontend-разработчик С# + ручной тестер',
+    achievements: [
+      'разработка desktop приложения на WPF для мониторинга физических величин',
+      'участвовал в покрытии страниц автотестами на Selenium + Appium',
+      'участвовал в покрытии кода тестами на NUnit',
+      'менторство членов команды + выполнял роль скрам мастера'
+    ]
+  },
+  {
+    company: 'Метраникс (Метран)',
+    period: '2022 — 2026',
     role: 'Frontend-разработчик',
     achievements: [
-      'Разработал 12+ адаптивных лендингов на Vue',
-      'Внедрил SSR на Nuxt — ускорение SEO на 40%',
-      'Настроил сборку Vite с нуля'
+      'разработка визуализации данных с использованием Chart.js.',
+      'доработка интерпретатора C-подобного языка на TypeScript.',
+      'автоматизация тестирования: UI-тесты (Cypress), unit-тесты (Jest).',
+      'работа с англоязыной документацией зарубежных коллег.',
+      'менторство новых членов команды, проведение code review с контролем соблюдения архитектурных стандартов.',
+      'активное участие в code review с фокусом на качество кода и поддерживаемость.'
     ]
-  },
-  {
-    company: 'Фриланс',
-    period: '2020 — 2022',
-    role: 'Верстальщик',
-    achievements: [
-      'Сверстал 20+ проектов по макетам Figma',
-      'Использовал BEM, Flexbox, Grid',
-      'Оптимизировал загрузку картинок (WebP, ленивая загрузка)'
-    ]
-  }
-])
-
-const projects = ref([
-  {
-    name: 'Todo на Vue 3 Composition API',
-    desc: 'Drag-and-drop, локальное хранилище, темная тема',
-    link: 'https://github.com/ваш-ник/todo-vue'
-  },
-  {
-    name: 'Портфолио-резюме',
-    desc: 'Сайт, который вы видите сейчас (Vue 3 + анимации)',
-    link: '#'
   }
 ])
 
@@ -81,7 +74,7 @@ function toggleTheme() {
         <!-- ЛЕВАЯ КОЛОНКА (фото, контакты, навыки) -->
         <aside class="sidebar">
           <div class="photo-wrapper">
-            <img :src="photoUrl" alt="Фото" class="photo" @error="(e) => e.target.src = 'https://via.placeholder.com/200?text=Фото'" />
+            <img :src="photoUrl" alt="Здесь должно было быть фото:(" class="photo" @error="(e) => e.target.src = 'https://via.placeholder.com/200?text=Фото'" />
           </div>
 
           <h1 class="name">{{ personal.name }}</h1>
@@ -90,8 +83,18 @@ function toggleTheme() {
           <div class="contacts">
             <p><MapPin class="contact-icon" :size="18" /> {{ personal.location }}</p>
             <p><Mail class="contact-icon" :size="18" /> {{ personal.email }}</p>
-            <p><GithubCircle class="contact-icon" :size="18" /> {{ personal.github }}</p>
-            <p><Telegram class="contact-icon" :size="18" /> {{ personal.telegram }}</p>
+            <p>
+              <GithubCircle class="contact-icon" :size="18" />
+              <a :href="`https://${personal.github}`" target="_blank" rel="noopener noreferrer" class="contact-link">
+                {{ personal.github }}
+              </a>
+            </p>
+            <p>
+      <Telegram class="contact-icon" :size="18" />
+      <a :href="`https://t.me/${personal.telegram.replace('@', '')}`" target="_blank" rel="noopener noreferrer" class="contact-link">
+        {{ personal.telegram }}
+      </a>
+    </p>
           </div>
 
           <div class="skills">
@@ -102,6 +105,11 @@ function toggleTheme() {
                 <small>({{ skill.level }})</small>
               </span>
             </div>
+          </div>
+
+          <div class="OS">
+            <h3>OS</h3>
+            <p class="OS-names">Linux, Windows</p>
           </div>
         </aside>
 
@@ -128,19 +136,8 @@ function toggleTheme() {
             </div>
           </section>
 
-          <section>
-            <h2>Проекты</h2>
-            <div class="project-list">
-              <div v-for="project in projects" :key="project.name" class="project-card">
-                <h3>{{ project.name }}</h3>
-                <p>{{ project.desc }}</p>
-                <a :href="project.link" target="_blank" rel="noopener noreferrer">→ GitHub</a>
-              </div>
-            </div>
-          </section>
-
           <footer class="footer">
-            <p>Свяжитесь со мной — открыт к сотрудничеству ✨</p>
+            <p>Открыт к сотрудничеству ✨</p>
           </footer>
         </main>
       </div>
@@ -235,6 +232,8 @@ body {
   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
   border: 1px solid var(--border);
   height: fit-content;
+  animation: slideInLeft 0.6s ease-out forwards;
+  opacity: 0;
 }
 
 .photo-wrapper {
@@ -250,6 +249,13 @@ body {
   object-fit: cover;
   border: 3px solid var(--accent);
   box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  cursor: pointer;
+}
+
+.photo:hover {
+  transform: scale(1.2);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.2);
 }
 
 .name {
@@ -273,7 +279,20 @@ body {
   flex-direction: column;
   gap: 0.6rem;
   font-size: 0.9rem;
-  color: var(--text-secondary);
+  color: var(--text-primary);
+}
+
+.OS {
+  gap: 0.6rem;
+  margin: 1.5rem 0;
+}
+
+.OS-names {
+  display: flex;
+  margin: 1rem 0;
+  margin-left: 1rem;
+  font-size: 0.9rem;
+  color: var(--text-primary);
 }
 
 .contacts p {
@@ -283,6 +302,17 @@ body {
 .contact-icon {
   vertical-align: middle;
   padding-right: 0.1rem;
+}
+
+.contact-link {
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.contact-link:hover {
+  color: var(--text-secondary);
+  text-decoration: underline;
 }
 
 .skills h3 {
@@ -304,6 +334,18 @@ body {
   font-weight: 500;
   border: 1px solid var(--border);
 }
+
+.skill-tag:hover {
+  animation: shake 0.2s ease-in-out 0s 2;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  75% { transform: translateX(2px); }
+  100% { transform: translateX(0); }
+}
+
 .skill-tag small {
   font-weight: normal;
   opacity: 0.7;
@@ -315,6 +357,9 @@ body {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  animation: slideInRight 0.6s ease-out forwards;
+  opacity: 0;
+  animation-delay: 0.2s;
 }
 
 section {
@@ -323,6 +368,8 @@ section {
   padding: 1.8rem;
   border: 1px solid var(--border);
   transition: transform 0.2s;
+  animation: fadeScale 0.5s ease-out forwards;
+  opacity: 0;
 }
 
 section:hover {
@@ -424,6 +471,44 @@ li {
   padding: 1rem;
   font-size: 0.9rem;
   color: var(--text-secondary);
+}
+
+section:nth-child(1) { animation-delay: 0.3s; }
+section:nth-child(2) { animation-delay: 0.4s; }
+section:nth-child(3) { animation-delay: 0.5s; }
+section:nth-child(4) { animation-delay: 0.6s; }
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 /* Адаптив */
